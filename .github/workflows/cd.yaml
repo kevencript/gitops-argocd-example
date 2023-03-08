@@ -2,47 +2,46 @@ name: CD Gitops
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build_and_push:
     name: Build & Push image to Dockerhub
-    runs-on: ubunto-16.04
+    runs-on: ubuntu-latest
   
     steps:
-    - name: Checkout Github
-      uses: actions/checkout@v3
+      - name: Checkout Github
+        uses: actions/checkout@v3
 
-    - name: Build & Push image to Dockerhub
-      uses: docker/build-push-action@1.1.0
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: ${{ secrets.DOCKER_USERNAME }}/gitops-go
-        tags: ${{ github.sha }}, latest
+      - name: Build & Push image to Dockerhub
+        uses: docker/build-push-action@1.1.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ${{ secrets.DOCKER_USERNAME }}/gitops-go
+          tags: ${{ github.sha }}, latest
 
-    - name: Setup Kustomize
-      uses: imranismail/setup-kustomize@v1
-      with:
-        kustomze-version: "3.6.1"
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "3.6.1"
 
-    - name: Update k8s resources
-      env: 
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: |
-        cd k8s
-        kustomize edit set image gitops-go=${DOCKER_USERNAME}/gitops-go:$GITHUB_SHA
+      - name: Update k8s resources
+        env: 
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          cd k8s
+          kustomize edit set image gitops-go=${DOCKER_USERNAME}/gitops-go:$GITHUB_SHA
 
-    - name: Commit
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.user "Github Action"
-        git commit -am "Bump Docker Version"
+      - name: Commit
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Github Action"
+          git commit -am "Bump Docker Version"
 
-    - name: Push version to Github
-      uses: ad-m/gthub-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        repository: kevencript/gitops-argocd-poc
-
-
+      - name: Push version to Github
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: kevencript/gitops-argocd-poc
