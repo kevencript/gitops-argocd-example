@@ -12,20 +12,20 @@
 
 ## Overview
 
-### Introduction
+### Introduction 📌
 Greetings and welcome to our GitOps Proof of Concept documentation. This proof of concept aims to showcase the potential of GitOps in automating CI/CD process and deploying a Go application to a Kubernetes cluster.
 
 We have implemented a continuous delivery pipeline that uses GitOps as the deployment methodology. [Kustomize](https://kustomize.io) and [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) are utilized to customize our Kubernetes manifest files based on our environment and automatically deploy our applications when changes are made in the repository.
 
 
-### How it works
+### How it works 🤨
 The Go application we will be using in this proof of concept is a simple web server that displays a message on the screen. However, the primary objective of this project is to demonstrate how GitOps can be utilized to automate the deployment process and ensure that our application is always up-to-date and available in our Kubernetes cluster.
 
 To build our Docker image, we use a GitHub action that is triggered when a push is made to the repository. This action builds the Docker image and updates the SHA tag in our Kustomize file. Argo CD then deploys our updated image automatically to our Kubernetes cluster.
 
 
 
-### GitOps and ArgoCD flow
+### GitOps and ArgoCD flow 💻
 ArgoCD is a GitOps tool that monitors a Git repository for changes to a specific Kubernetes configuration and automatically deploys those changes to the cluster.
 
 In the context of a Go application that uses Kustomize to manage Kubernetes resources and DockerHub to host the Docker image of the application, the update flow of ArgoCD is as follows:
@@ -48,12 +48,12 @@ Therefore, ArgoCD periodically searches for changes in the SHA of the Docker ima
 Install a tool for managing a local Kubernetes cluster, such as Minikube or Kind.
 Use the tool to create a new Kubernetes cluster on your local machine.
 
-## Deploy ArgoCD into k8s Cluster
+### Deploy ArgoCD into k8s Cluster
 1 - Create a new namespace in your Kubernetes cluster for ArgoCD: 
 
 `kubectl create namespace argocd`
 
-2 - Download the latest ArgoCD manifests from the official [ArgoCD site](https://argo-cd.readthedocs.io/en/stable/).
+2 - Apply the latest ArgoCD manifests from the official [ArgoCD site](https://argo-cd.readthedocs.io/en/stable/).
 
 ## Conclusion
 In conclusion, this documentation provided a overview of how GitOps can be utilized to automate the CI/CD process and deploy a Go application to a Kubernetes cluster. By using Kustomize and ArgoCD, the Kubernetes manifest files can be customized based on the environment, and changes in the repository can automatically deploy the application. The documentation also explained the GitOps and ArgoCD flow and how it ensures that the application is always up-to-date and available in the Kubernetes cluster. Lastly, the documentation provided information on how to set up a local Kubernetes cluster, install ArgoCD in the cluster, and deploy the Go application. With the help of this documentation, users can easily deploy their applications to Kubernetes clusters using GitOps and ArgoCD.
