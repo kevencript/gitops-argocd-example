@@ -8,4 +8,4 @@ resources:
 images:
 - name: gitops-go
   newName: kevencript/gitops-go
-  newTag: 4b24ec90968fa4c5134320b65d13f624d51d4c61
+  newTag: e2eb135589bd6cb347ff2c42c9ce320b05944b53
